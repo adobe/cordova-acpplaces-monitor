@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="cordova-acpplacesmonitor"
+        version="0.0.1"
+        xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+    <name>cordova-acpplacesmonitor</name>
+    <description>ACPPlacesMonitor Plugin for Cordova</description>
+    <license>Apache 2.0</license>
+    <keywords>cordova,adobe,places monitor,acpplacesmonitor,marketing</keywords>
+
+    <!-- use "ACPPlacesMonitor" to access the plugin APIs in javascript -->
+    <js-module name="cordova-acpplacesmonitor" src="www/ACPPlacesMonitor.js">
+        <clobbers target="ACPPlacesMonitor" />
+    </js-module>
+
+    <!-- dependency on ACPCore plugin -->
+    <dependency id="cordova-acpcore" url="https://github.com/adobe/cordova-acpcore" />
+
+    <!-- configure android platform -->
+    <platform name="android">
+        <config-file parent="/*" target="res/xml/config.xml">
+            <feature name="ACPPlacesMonitor_Cordova">
+                <param name="android-package" value="com.adobe.marketing.mobile.cordova.ACPPlacesMonitor_Cordova" />
+                <param name="onload" value="true" />
+            </feature>
+        </config-file>
+        <config-file parent="/*" target="AndroidManifest.xml" />
+        <!-- plugin source -->
+        <source-file src="src/android/ACPPlacesMonitor_Cordova.java"
+                     target-dir="src/com/adobe/marketing/mobile/cordova" />
+        <!-- dependencies managed through included gradle file -->
+        <framework custom="true" src="src/android/ACPPlacesMonitor_Cordova.gradle" type="gradleReference" />
+    </platform>
+
+    <!-- configure ios platform -->
+    <platform name="ios">
+        <config-file parent="/*" target="config.xml">
+            <feature name="ACPPlacesMonitor_Cordova">
+                <param name="ios-package" value="ACPPlacesMonitor_Cordova" />
+                <param name="onload" value="true" />
+            </feature>
+        </config-file>
+        <!-- plugin source -->
+        <source-file src="src/ios/ACPPlacesMonitor_Cordova.m" />
+        <!-- sdk source for ios managed by cocoapods -->
+        <podspec>
+            <config>
+                <source url="https://github.com/CocoaPods/Specs.git" />
+            </config>
+            <pods use-frameworks="true">
+                <pod name="ACPPlacesMonitor" spec=">= 2.1.3" />
+            </pods>
+        </podspec>
+    </platform>
+</plugin>
