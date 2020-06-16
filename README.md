@@ -83,11 +83,11 @@ public class MobileApp extends Application {
         MobileCore.setApplication(this);
         MobileCore.ConfigureWithAppId("yourAppId");
         try {
-            PlacesMonitor.registerExtension(); //Register PlacesMonitor with Mobile Core
-            Places.registerExtension(); //Register Places with Mobile Core
+            PlacesMonitor.registerExtension();
+            Places.registerExtension();
             MobileCore.start(null);
             // Set the location permission
-            PlacesMonitor.setLocationPermission(PlacesMonitorLocationPermission.WHILE_USING_APP);
+            PlacesMonitor.setRequestLocationPermission(PlacesMonitorLocationPermission.WHILE_USING_APP);
             // Start monitoring the geo-fences
             PlacesMonitor.start();
         } catch (Exception e) {
@@ -120,17 +120,17 @@ ACPPlacesMonitor.updateLocation(function(response) {
     console.log(error);  
 });
 ```
-##### Set or upgrade the location permission (Android) / request authorization level (iOS):
+##### Set or upgrade the location permission request (Android) / request authorization level (iOS):
 ```js
-ACPPlacesMonitor.setLocationPermission(ACPPlacesMonitor.PermissionAlwaysAllow, function(response) {  
-    console.log("Successfully set the location permission.");
+ACPPlacesMonitor.setRequestLocationPermission(ACPPlacesMonitor.LocationPermissionAlwaysAllow, function(response) {  
+    console.log("Successfully set the location permission request.");
 }, function(error){  
     console.log(error);  
 }); 
 ```
 ##### Set the monitoring mode (iOS only):
 ```js
-ACPPlacesMonitor.setPlacesMonitorMode(ACPPlacesMonitor.MonitorModeSignificantChanges, function(response) {  
+ACPPlacesMonitor.setPlacesMonitorMode(ACPPlacesMonitor.MonitorModeContinuous, function(response) {  
     console.log("Successfully set the places monitor mode.");
 }, function(error){  
     console.log(error);  

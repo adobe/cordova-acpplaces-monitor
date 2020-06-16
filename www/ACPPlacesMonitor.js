@@ -14,10 +14,19 @@ var ACPPlacesMonitor = (function() {
 	var ACPPlacesMonitor = (typeof exports !== 'undefined') && exports || {};
 	var PLUGIN_NAME = "ACPPlacesMonitor_Cordova";
 
+    // ===========================================================================
+    // public enums
+    // ===========================================================================
+    ACPPlacesMonitor.LocationPermissionWhileUsingTheApp= 0;
+    ACPPlacesMonitor.LocationPermissionAlwaysAllow = 1;
+    ACPPlacesMonitor.LocationPermissionNone = 2;
+
+    ACPPlacesMonitor.MonitorModeContinuous = 0;
+    ACPPlacesMonitor.MonitorModeSignificantChanges = 1;
+
 	// ===========================================================================
 	// public APIs
 	// ===========================================================================
-
     // Get the current PlacesMonitor extension version.
     ACPPlacesMonitor.extensionVersion = function (success, error) {
         var FUNCTION_NAME = "extensionVersion";
@@ -39,11 +48,6 @@ var ACPPlacesMonitor = (function() {
     ACPPlacesMonitor.start = function (success, error) {
         var FUNCTION_NAME = "start";
 
-        if (!acpIsArray(attributeNames)) {
-            acpPrintNotAnArray("attributeNames", FUNCTION_NAME);
-            return;
-        }
-
         if (success && !isFunction(success)) {
             printNotAFunction("success", FUNCTION_NAME);
             return;
@@ -61,11 +65,6 @@ var ACPPlacesMonitor = (function() {
     ACPPlacesMonitor.stop = function (success, error) {
         var FUNCTION_NAME = "stop";
 
-        if (!acpIsString(attributeName)) {
-            acpPrintNotAString("attributeName", FUNCTION_NAME);
-            return;
-        }
-
         if (success && !isFunction(success)) {
             printNotAFunction("success", FUNCTION_NAME);
             return;
@@ -82,11 +81,6 @@ var ACPPlacesMonitor = (function() {
     ACPPlacesMonitor.updateLocation = function (success, error) {
         var FUNCTION_NAME = "updateLocation";
 
-        if (!acpIsArray(attributeNames)) {
-            acpPrintNotAnArray("attributeNames", FUNCTION_NAME);
-            return;
-        }
-
         if (success && !isFunction(success)) {
             printNotAFunction("success", FUNCTION_NAME);
             return;
@@ -100,16 +94,11 @@ var ACPPlacesMonitor = (function() {
     };
 
     // Sets the type of location permission request for which the user is prompted to select.
-    ACPPlacesMonitor.setLocationPermission = function (locationPermission, success, error) {
-        var FUNCTION_NAME = "setLocationPermission";
+    ACPPlacesMonitor.setRequestLocationPermission = function (locationPermission, success, error) {
+        var FUNCTION_NAME = "setRequestLocationPermission";
 
-        if (!acpIsString(attributeName)) {
-            acpPrintNotAString("attributeName", FUNCTION_NAME);
-            return;
-        }
-
-        if (!acpIsString(attributeValue) && !acpIsNumber(attributeValue) && !acpIsArray(attributeValue)) {
-            acpPrintNotAValidAttributeValue("attributeValue", FUNCTION_NAME);
+        if (!acpIsNumber(locationPermission)) {
+            acpIsNumber("locationPermission", FUNCTION_NAME);
             return;
         }
 
@@ -130,8 +119,8 @@ var ACPPlacesMonitor = (function() {
     ACPPlacesMonitor.setPlacesMonitorMode = function (monitorMode, success, error) {
         var FUNCTION_NAME = "setPlacesMonitorMode";
 
-        if (!acpIsObject(attributes)) {
-            acpPrintNotAnObject("attributes", FUNCTION_NAME);
+        if (!acpIsNumber(monitorMode)) {
+            acpPrintNotANumber("monitorMode", FUNCTION_NAME);
             return;
         }
 
@@ -154,14 +143,6 @@ var ACPPlacesMonitor = (function() {
 // ===========================================================================
 // helper functions
 // ===========================================================================
-function acpIsString (value) {
-    return typeof value === 'string' || value instanceof String;
-};
-
-function acpPrintNotAString (paramName, functionName) {
-    console.log("Ignoring call to '" + functionName + "'. The '" + paramName + "' parameter is required to be a String.");
-};
-
 function acpIsNumber (value) {
     return typeof value === 'number' && isFinite(value);
 };
@@ -177,21 +158,5 @@ function isFunction (value) {
 function printNotAFunction (paramName, functionName) {
     console.log("Ignoring call to '" + functionName + "'. The '" + paramName + "' parameter is required to be a function.");
 }
-
-function acpIsObject (value) {
-    return value && typeof value === 'object' && value.constructor === Object;
-};
-
-function acpPrintNotAnObject (paramName, functionName) {
-    console.log("Ignoring call to '" + functionName + "'. The '" + paramName + "' parameter is required to be an Object.");
-};
-
-function acpIsArray (value) {
-    return value && typeof value === 'object' && value.constructor === Array;
-};
-
-function acpPrintNotAnArray (paramName, functionName) {
-    console.log("Ignoring call to '" + functionName + "'. The '" + paramName + "' parameter is required to be an Array.");
-};
 
 module.exports = ACPPlacesMonitor;

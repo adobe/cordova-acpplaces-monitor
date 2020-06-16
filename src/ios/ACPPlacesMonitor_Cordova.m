@@ -22,7 +22,7 @@
 - (void)start:(CDVInvokedUrlCommand*)command;
 - (void)stop:(CDVInvokedUrlCommand*)command;
 - (void)updateLocation:(CDVInvokedUrlCommand*)command;
-- (void)setLocationPermission:(CDVInvokedUrlCommand*)command;
+- (void)setRequestLocationPermission:(CDVInvokedUrlCommand*)command;
 - (void)setPlacesMonitorMode:(CDVInvokedUrlCommand*)command;
 
 @end
@@ -86,8 +86,9 @@
     }];
 }
 
-- (void)setLocationPermission:(CDVInvokedUrlCommand*)command
+- (void)setRequestLocationPermission:(CDVInvokedUrlCommand*)command
 {
+    // maps to setRequestAuthorizationLevel on iOS
     [self.commandDelegate runInBackground:^{
         NSString* attributeName = [self getCommandArg:command.arguments[0]];
         NSObject* attributeValue = [self getCommandArg:command.arguments[1]];

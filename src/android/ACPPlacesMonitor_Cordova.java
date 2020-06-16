@@ -17,7 +17,6 @@ import org.apache.cordova.LOG;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import com.adobe.marketing.mobile.AdobeCallback;
 import com.adobe.marketing.mobile.Places;
 import com.adobe.marketing.mobile.PlacesMonitor;
 
@@ -36,7 +35,7 @@ public class ACPPlacesMonitor_Cordova extends CordovaPlugin {
     final static String METHOD_PLACESMONITOR_START = "start";
     final static String METHOD_PLACESMONITOR_STOP = "stop";
     final static String METHOD_PLACESMONITOR_UPDATE_LOCATION = "updateLocation";
-    final static String METHOD_PLACESMONITOR_SET_LOCATION_PERMISSION = "setLocationPermission";
+    final static String METHOD_PLACESMONITOR_SET_LOCATION_PERMISSION = "setRequestLocationPermission";
     final static String METHOD_PLACESMONITOR_SET_PLACES_MONITOR_MODE = "setPlacesMonitorMode";
     final static String LOG_TAG = "ACPPlacesMonitor_Cordova";
 
@@ -167,7 +166,7 @@ public class ACPPlacesMonitor_Cordova extends CordovaPlugin {
         });
     }
 
-    private void setLocationPermission(final JSONArray args, final CallbackContext callbackContext) {
+    private void setRequestLocationPermission(final JSONArray args, final CallbackContext callbackContext) {
         cordova.getThreadPool().execute(new Runnable() {
             @Override
             public void run() {
