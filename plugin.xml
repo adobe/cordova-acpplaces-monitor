@@ -13,8 +13,9 @@
         <clobbers target="ACPPlacesMonitor" />
     </js-module>
 
-    <!-- dependency on ACPCore plugin -->
+    <!-- dependency on ACPCore and ACPPlaces plugin -->
     <dependency id="cordova-acpcore" url="https://github.com/adobe/cordova-acpcore" />
+    <dependency id="cordova-acpplaces" url="https://github.com/adobe/cordova-acpplaces" />
 
     <!-- configure android platform -->
     <platform name="android">
