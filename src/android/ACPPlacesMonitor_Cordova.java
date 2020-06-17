@@ -138,14 +138,12 @@ public class ACPPlacesMonitor_Cordova extends CordovaPlugin {
     // Helpers
     // ===============================================================
     private PlacesMonitorLocationPermission getLocationPermissionValue(final int locationPermission){
-        if(locationPermission == 0) {
-            return  PlacesMonitorLocationPermission.WHILE_USING_APP;
-        } else if(locationPermission == 1) {
+        if(locationPermission == 1) {
             return PlacesMonitorLocationPermission.ALWAYS_ALLOW;
         } else if(locationPermission  == 2) {
             return PlacesMonitorLocationPermission.NONE;
         } else {
-            return null;
+            return  PlacesMonitorLocationPermission.WHILE_USING_APP;
         }
     }
 }
