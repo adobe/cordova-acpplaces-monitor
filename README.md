@@ -106,7 +106,8 @@ ACPPlacesMonitor.start(function(response) {
 ```
 ##### Stop the Places Monitor:
 ```js
-ACPPlacesMonitor.stop(function(response) {  
+var clearPlacesData = true;
+ACPPlacesMonitor.stop(clearPlacesData, function(response) {  
     console.log("Successfully stopped the Places Monitor.");
 }, function(error){  
     console.log(error);  

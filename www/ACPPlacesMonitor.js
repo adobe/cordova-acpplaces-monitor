@@ -62,8 +62,13 @@ var ACPPlacesMonitor = (function() {
     };
 
     // Stop tracking the device's location.
-    ACPPlacesMonitor.stop = function (success, error) {
+    ACPPlacesMonitor.stop = function (shouldClearData, success, error) {
         var FUNCTION_NAME = "stop";
+
+        if(shouldClearData && !acpIsBoolean(shouldClearData)) {
+            acpPrintNotABoolean("shouldClearData", FUNCTION_NAME);
+            return;
+        }
 
         if (success && !isFunction(success)) {
             printNotAFunction("success", FUNCTION_NAME);
@@ -74,7 +79,7 @@ var ACPPlacesMonitor = (function() {
             printNotAFunction("error", FUNCTION_NAME);
             return;
         }
-        return exec(success, error, PLUGIN_NAME, FUNCTION_NAME, []);
+        return exec(success, error, PLUGIN_NAME, FUNCTION_NAME, [shouldClearData]);
     };
 
     // Immediately update the device's location and refresh the nearby POIs that are monitored by the extension.
@@ -153,10 +158,18 @@ function acpPrintNotANumber (paramName, functionName) {
 
 function isFunction (value) {
     return typeof value === 'function';
-}
+};
 
 function printNotAFunction (paramName, functionName) {
     console.log("Ignoring call to '" + functionName + "'. The '" + paramName + "' parameter is required to be a function.");
-}
+};
+
+function acpIsBoolean (value) {
+    return typeof value === 'boolean';
+};
+
+function acpPrintNotABoolean (paramName, functionName) {
+    console.log("Ignoring call to '" + functionName + "'. The '" + paramName + "' parameter is required to be a boolean.");
+};
 
 module.exports = ACPPlacesMonitor;

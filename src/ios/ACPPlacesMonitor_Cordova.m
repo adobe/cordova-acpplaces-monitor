@@ -12,7 +12,6 @@
 /********* cordova-acpprofilemonitor.m Cordova Plugin Implementation *******/
 
 #import <Cordova/CDV.h>
-#import <ACPPlaces/ACPPlace.h>
 #import <ACPPlacesMonitor/ACPPlacesMonitor.h>
 #import <Cordova/CDVPluginResult.h>
 
@@ -48,20 +47,8 @@
 - (void)start:(CDVInvokedUrlCommand*)command
 {
     [self.commandDelegate runInBackground:^{
-        dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
-        __block CDVPluginResult* pluginResult = nil;
-        NSArray<NSString*>* userAttributesToRetrieve = [self getCommandArg:command.arguments[0]];
-        [ACPUserProfile getUserAttributes:userAttributesToRetrieve withCompletionHandler:^(NSDictionary* _Nullable userAttributes, NSError* error) {
-            if(userAttributes != nil && userAttributes.count != 0) {
-                NSData* jsonData = [NSJSONSerialization dataWithJSONObject:userAttributes options:0 error:nil];
-                pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:[[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]];
-            }
-            if(error){
-                [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsString:[NSString stringWithFormat:@"User profile request error code: %@", error]] callbackId:command.callbackId];
-            }
-            dispatch_semaphore_signal(semaphore);
-        }];
-        dispatch_semaphore_wait(semaphore, dispatch_time(DISPATCH_TIME_NOW, ((int64_t)1 * NSEC_PER_SEC)));
+        [ACPPlacesMonitor start];
+        CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     }];
 }
@@ -69,8 +56,8 @@
 - (void)stop:(CDVInvokedUrlCommand*)command
 {
     [self.commandDelegate runInBackground:^{
-        NSString* attribute = [self getCommandArg:command.arguments[0]];
-        [ACPUserProfile removeUserAttribute:attribute];
+        BOOL shouldClearPlacesData = [self getCommandArg:command.arguments[0]];
+        [ACPPlacesMonitor stop:shouldClearPlacesData];
         CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     }];
@@ -79,8 +66,7 @@
 - (void)updateLocation:(CDVInvokedUrlCommand*)command
 {
     [self.commandDelegate runInBackground:^{
-        NSArray<NSString*>* userAttributes = [self getCommandArg:command.arguments[0]];
-        [ACPUserProfile removeUserAttributes:userAttributes];
+        [ACPPlacesMonitor updateLocationNow];
         CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     }];
@@ -88,12 +74,9 @@
 
 - (void)setRequestLocationPermission:(CDVInvokedUrlCommand*)command
 {
-    // maps to setRequestAuthorizationLevel on iOS
     [self.commandDelegate runInBackground:^{
-        NSString* attributeName = [self getCommandArg:command.arguments[0]];
-        NSObject* attributeValue = [self getCommandArg:command.arguments[1]];
-        NSString *attributeValueString = [self convertObjectToString:attributeValue];
-        [ACPUserProfile updateUserAttribute:attributeName withValue:attributeValueString];
+        ACPPlacesMonitorRequestAuthorizationLevel authorizationLevel = [self convertToAuthorizationLevel:[self getCommandArg:command.arguments[0]]];
+        [ACPPlacesMonitor setRequestAuthorizationLevel:authorizationLevel];
         CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     }];
@@ -102,8 +85,8 @@
 - (void)setPlacesMonitorMode:(CDVInvokedUrlCommand*)command
 {
     [self.commandDelegate runInBackground:^{
-        NSDictionary* attributes = [self getCommandArg:command.arguments[0]];
-        [ACPUserProfile updateUserAttributes:attributes];
+        ACPPlacesMonitorMode mode = [self convertToMonitorMode:[self getCommandArg:command.arguments[0]]];
+        [ACPPlacesMonitor setPlacesMonitorMode:mode];
         CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
         [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
     }];
@@ -117,15 +100,20 @@
     return argument == (id)[NSNull null] ? nil : argument;
 }
 
-- (NSString*) convertObjectToString:(NSObject*) attributeValue {
-    NSString* stringValue = @"";
-    if ([attributeValue isKindOfClass:[NSString class]]) {
-        stringValue = (NSString*)attributeValue;
-    } else if([attributeValue isKindOfClass:[NSArray class]]){
-        NSArray* tempArray = (NSArray*)attributeValue;
-        stringValue = [[tempArray valueForKey:@"description"] componentsJoinedByString:@", "];
+- (ACPPlacesMonitorRequestAuthorizationLevel) convertToAuthorizationLevel:(NSNumber*) authorization {
+    if(authorization.integerValue == 1){
+        return ACPPlacesRequestMonitorAuthorizationLevelAlways;
+    } else {
+        return ACPPlacesMonitorRequestAuthorizationLevelWhenInUse;
     }
-    return stringValue;
+}
+
+- (ACPPlacesMonitorMode) convertToMonitorMode:(NSNumber*) monitorMode {
+    if(monitorMode.integerValue == 1){
+        return ACPPlacesMonitorModeSignificantChanges;
+    } else {
+        return ACPPlacesMonitorModeContinuous;
+    }
 }
 
 @end
