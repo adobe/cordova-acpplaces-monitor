@@ -61,7 +61,7 @@ Within the App's application:didFinishLaunchingWithOptions, register the SDK ext
     [ACPPlacesMonitor registerExtension];
     [ACPCore start:^{            
         // Set the request authorization level
-        [ACPPlacesMonitor setRequestAuthorizationLevel: ACPPlacesRequestAuthorizationLevelWhenInUse];
+        [ACPPlacesMonitor setRequestAuthorizationLevel: ACPPlacesMonitorRequestAuthorizationLevelWhenInUse];
         // Start monitoring the geo-fences
         [ACPPlacesMonitor start];
     }];
@@ -75,6 +75,7 @@ Within the App's OnCreate method, register the SDK extensions and start the Plac
 import com.adobe.marketing.mobile.MobileCore;
 import com.adobe.marketing.mobile.Places;
 import com.adobe.marketing.mobile.PlacesMonitor;
+import com.adobe.marketing.mobile.PlacesMonitorLocationPermission;
 
 public class MobileApp extends Application {
     @Override
