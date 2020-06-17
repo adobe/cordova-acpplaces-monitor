@@ -17,7 +17,7 @@ var ACPPlacesMonitor = (function() {
     // ===========================================================================
     // public enums
     // ===========================================================================
-    ACPPlacesMonitor.LocationPermissionWhileUsingTheApp= 0;
+    ACPPlacesMonitor.LocationPermissionWhileUsingTheApp = 0;
     ACPPlacesMonitor.LocationPermissionAlwaysAllow = 1;
     ACPPlacesMonitor.LocationPermissionNone = 2;
 
