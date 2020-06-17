@@ -47,7 +47,7 @@ ACPPlacesMonitor.extensionVersion(function(version){
 ##### Registering the extension with ACPCore and starting the Places Monitor:  
 
  > Note: It is required to initialize the SDK via native code inside your AppDelegate and MainApplication for iOS and Android respectively. For more information see how to initialize [Core](https://aep-sdks.gitbook.io/docs/getting-started/initialize-the-sdk).  
-  
+
   ##### **iOS**
 Within the App's application:didFinishLaunchingWithOptions, register the SDK extensions and start the Places Monitor:
 ```objective-c
@@ -69,7 +69,13 @@ Within the App's application:didFinishLaunchingWithOptions, register the SDK ext
     return YES;
 }
 ```
+The following updates are also neccessary for Places Monitor on iOS:
+
+- [Enable location updates in the background](https://docs.adobe.com/content/help/en/places/using/places-ext-aep-sdks/places-monitor-extension/using-places-monitor-extension.html#enable-location-updates-background)
+- [Add the keys NSLocationWhenInUseUsageDescription and NSLocationAlwaysAndWhenInUseUsageDescription to the app's plist file](https://docs.adobe.com/content/help/en/places/using/places-ext-aep-sdks/places-monitor-extension/using-places-monitor-extension.html#configuring-the-plist-keys)
+
   ##### **Android:**
+
 Within the App's OnCreate method, register the SDK extensions and start the Places Monitor:
 ```java
 import com.adobe.marketing.mobile.MobileCore;
@@ -97,7 +103,12 @@ public class MobileApp extends Application {
     }
 }
 ```
+The following update is also neccessary for Places Monitor on Android:
+
+- [Add location permissions to the app manifest](https://docs.adobe.com/content/help/en/places/using/places-ext-aep-sdks/places-monitor-extension/using-places-monitor-extension.html#add-permissions-to-the-manifest)
+
 ##### Start the Places Monitor (if not started during app initialization):
+
 ```js
 ACPPlacesMonitor.start(function(response) {  
     console.log("Successfully started the Places Monitor.");
