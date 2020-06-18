@@ -49,7 +49,7 @@ ACPPlacesMonitor.extensionVersion(function(version){
  > Note: It is required to initialize the SDK via native code inside your AppDelegate and MainApplication for iOS and Android respectively. For more information see how to initialize [Core](https://aep-sdks.gitbook.io/docs/getting-started/initialize-the-sdk).  
 
   ##### **iOS**
-Within the App's application:didFinishLaunchingWithOptions, register the SDK extensions and start the Places Monitor:
+Within the App's application:didFinishLaunchingWithOptions, register the SDK extensions:
 ```objective-c
 #import "ACPCore.h"
 #import "ACPPlaces.h"
@@ -59,12 +59,7 @@ Within the App's application:didFinishLaunchingWithOptions, register the SDK ext
     [ACPCore configureWithAppId:@"yourAppId"];
     [ACPPlaces registerExtension];
     [ACPPlacesMonitor registerExtension];
-    [ACPCore start:^{            
-        // Set the request authorization level
-        [ACPPlacesMonitor setRequestAuthorizationLevel: ACPPlacesMonitorRequestAuthorizationLevelWhenInUse];
-        // Start monitoring the geo-fences
-        [ACPPlacesMonitor start];
-    }];
+    [ACPCore start: nil];
 
     return YES;
 }
@@ -81,7 +76,6 @@ Within the App's OnCreate method, register the SDK extensions and start the Plac
 import com.adobe.marketing.mobile.MobileCore;
 import com.adobe.marketing.mobile.Places;
 import com.adobe.marketing.mobile.PlacesMonitor;
-import com.adobe.marketing.mobile.PlacesMonitorLocationPermission;
 
 public class MobileApp extends Application {
     @Override
@@ -93,10 +87,6 @@ public class MobileApp extends Application {
             PlacesMonitor.registerExtension();
             Places.registerExtension();
             MobileCore.start(null);
-            // Set the location permission
-            PlacesMonitor.setRequestLocationPermission(PlacesMonitorLocationPermission.WHILE_USING_APP);
-            // Start monitoring the geo-fences
-            PlacesMonitor.start();
         } catch (Exception e) {
             //Log the exception
         }
@@ -107,13 +97,18 @@ The following update is also neccessary for Places Monitor on Android:
 
 - [Add location permissions to the app manifest](https://docs.adobe.com/content/help/en/places/using/places-ext-aep-sdks/places-monitor-extension/using-places-monitor-extension.html#add-permissions-to-the-manifest)
 
-##### Start the Places Monitor (if not started during app initialization):
+##### Start the Places Monitor:
 
 ```js
-ACPPlacesMonitor.start(function(response) {  
+// start the places monitor when the device ready event is heard
+document.addEventListener("deviceready", function () {
+  ACPPlacesMonitor.start(function(response) {  
     console.log("Successfully started the Places Monitor.");
-}, function(error){  
+  }, function(error){  
     console.log(error);  
+  });
+}, function (error) {
+        console.log(error);
 });
 ```
 ##### Stop the Places Monitor:
