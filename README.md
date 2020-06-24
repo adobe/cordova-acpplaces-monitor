@@ -48,7 +48,7 @@ ACPPlacesMonitor.extensionVersion(function(version){
 
  > Note: It is required to initialize the SDK via native code inside your AppDelegate and MainApplication for iOS and Android respectively. For more information see how to initialize [Core](https://aep-sdks.gitbook.io/docs/getting-started/initialize-the-sdk).  
 
-  ##### **iOS**
+##### **iOS**
 Within the App's application:didFinishLaunchingWithOptions, register the SDK extensions:
 ```objective-c
 #import "ACPCore.h"
@@ -69,7 +69,7 @@ The following updates are also neccessary for Places Monitor on iOS:
 - [Enable location updates in the background](https://docs.adobe.com/content/help/en/places/using/places-ext-aep-sdks/places-monitor-extension/using-places-monitor-extension.html#enable-location-updates-background)
 - [Add the keys NSLocationWhenInUseUsageDescription and NSLocationAlwaysAndWhenInUseUsageDescription to the app's plist file](https://docs.adobe.com/content/help/en/places/using/places-ext-aep-sdks/places-monitor-extension/using-places-monitor-extension.html#configuring-the-plist-keys)
 
-  ##### **Android:**
+##### **Android**
 
 Within the App's OnCreate method, register the SDK extensions and start the Places Monitor:
 ```java
