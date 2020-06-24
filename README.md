@@ -46,8 +46,6 @@ ACPPlacesMonitor.extensionVersion(function(version){
 ```
 ##### Registering the extension with ACPCore and starting the Places Monitor:  
 
- > Note: It is required to initialize the SDK via native code inside your AppDelegate and MainApplication for iOS and Android respectively. For more information see how to initialize [Core](https://aep-sdks.gitbook.io/docs/getting-started/initialize-the-sdk).  
-
 ##### **iOS**
 Within the App's application:didFinishLaunchingWithOptions, register the SDK extensions:
 ```objective-c
@@ -57,8 +55,9 @@ Within the App's application:didFinishLaunchingWithOptions, register the SDK ext
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary*)launchOptions {
     [ACPCore configureWithAppId:@"yourAppId"];
-    [ACPPlaces registerExtension];
-    [ACPPlacesMonitor registerExtension];
+    // Places must be registered when 
+    [ACPPlaces registerExtension]; //Register Places with Mobile Core
+    [ACPPlacesMonitor registerExtension]; //Register PlacesMonitor with Mobile Core
     [ACPCore start: nil];
 
     return YES;
@@ -84,8 +83,8 @@ public class MobileApp extends Application {
         MobileCore.setApplication(this);
         MobileCore.ConfigureWithAppId("yourAppId");
         try {
-            PlacesMonitor.registerExtension();
-            Places.registerExtension();
+            PlacesMonitor.registerExtension(); //Register PlacesMonitor with Mobile Core
+            Places.registerExtension(); //Register Places with Mobile Core
             MobileCore.start(null);
         } catch (Exception e) {
             //Log the exception
