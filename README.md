@@ -55,9 +55,8 @@ Within the App's application:didFinishLaunchingWithOptions, register the SDK ext
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary*)launchOptions {
     [ACPCore configureWithAppId:@"yourAppId"];
-    // Places must be registered when 
-    [ACPPlaces registerExtension]; //Register Places with Mobile Core
-    [ACPPlacesMonitor registerExtension]; //Register PlacesMonitor with Mobile Core
+    [ACPPlaces registerExtension]; //Register Places with Core
+    [ACPPlacesMonitor registerExtension]; //Register PlacesMonitor with Core
     [ACPCore start: nil];
 
     return YES;
@@ -83,8 +82,8 @@ public class MobileApp extends Application {
         MobileCore.setApplication(this);
         MobileCore.ConfigureWithAppId("yourAppId");
         try {
-            PlacesMonitor.registerExtension(); //Register PlacesMonitor with Mobile Core
-            Places.registerExtension(); //Register Places with Mobile Core
+            Places.registerExtension(); //Register Places with Core
+            PlacesMonitor.registerExtension(); //Register PlacesMonitor with Core
             MobileCore.start(null);
         } catch (Exception e) {
             //Log the exception
