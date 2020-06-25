@@ -1,9 +1,9 @@
 
 # Adobe Experience Platform - Places Monitor plugin for Cordova apps
 
-[![CI](https://github.com/adobe/cordova-acpplacesmonitor/workflows/CI/badge.svg)](https://github.com/adobe/cordova-acpplacesmonitor/actions)
+[![CI](https://github.com/adobe/cordova-acpplaces-monitor/workflows/CI/badge.svg)](https://github.com/adobe/cordova-acpplaces-monitor/actions)
 [![npm](https://img.shields.io/npm/v/@adobe/cordova-acpplacesmonitor)](https://www.npmjs.com/package/@adobe/cordova-acpplacesmonitor)
-[![GitHub](https://img.shields.io/github/license/adobe/cordova-acpplacesmonitor)](https://github.com/adobe/cordova-acpplacesmonitor/blob/master/LICENSE)
+[![GitHub](https://img.shields.io/github/license/adobe/cordova-acpplacesmonitor)](https://github.com/adobe/cordova-acpplaces-monitor/blob/master/LICENSE)
 
 - [Prerequisites](#prerequisites)  
 - [Installation](#installation)
