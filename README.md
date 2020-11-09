@@ -3,7 +3,7 @@
 
 [![CI](https://github.com/adobe/cordova-acpplaces-monitor/workflows/CI/badge.svg)](https://github.com/adobe/cordova-acpplaces-monitor/actions)
 [![npm](https://img.shields.io/npm/v/@adobe/cordova-acpplacesmonitor)](https://www.npmjs.com/package/@adobe/cordova-acpplacesmonitor)
-[![GitHub](https://img.shields.io/github/license/adobe/cordova-acpplaces-monitor)](https://github.com/adobe/cordova-acpplaces-monitor/blob/master/LICENSE)
+[![GitHub](https://img.shields.io/github/license/adobe/cordova-acpplaces-monitor)](https://github.com/adobe/cordova-acpplaces-monitor/blob/main/LICENSE)
 
 - [Prerequisites](#prerequisites)  
 - [Installation](#installation)
